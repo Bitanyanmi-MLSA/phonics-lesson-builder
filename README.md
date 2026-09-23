@@ -71,21 +71,9 @@ followed by `e`/`i`/`y` within the word.)
     smallest possible release and speaks it *fast* to keep it clipped,
     matching how reading-science programs teach these sounds (a quick
     "kuh", never a drawn-out one).
-  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using simple
-    CVC content-word references — *bag, egg, lid, ox, mud* — chosen to
-    dodge four separate pitfalls found through testing:
-    1. Interjections like "ah"/"aw" can collapse into the r-controlled
-       vowels (e.g. "ah" == "are") in British-style, non-rhotic speech.
-    2. Words ending in a nasal+stop cluster ("ant", "ink") are commonly
-       neutralized/misheard as "and"/"ing".
-    3. Grammatical *function* words ("am", "up" on their own) are often
-       spoken by TTS engines in a reduced/weak (schwa) form, swallowing
-       the very vowel sound being taught.
-    4. The most iconic classroom demo words ("cat", "pig", "cup") are
-       exactly what a teacher is likely to type as the *lesson word
-       itself* - when the demo word matches the target word, the
-       isolated sound and the whole word become literally identical
-       audio. Less-canonical (but equally regular) words avoid this.
+  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken as short
+    interjections — *ah, eh, ih, aw, uh* — read consistently by every
+    voice without being mistaken for a spelled-out letter name.
 
     Simple concrete nouns with one crisp final consonant avoid pitfalls
     1-3, since they're always spoken in full, stressed form.

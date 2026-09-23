@@ -455,30 +455,12 @@
     ng: { text: "ing", rate: 0.7 },
     h: { text: "hhh", rate: 0.7 },
 
-    // Vowels - real, unambiguous, simple CVC content-word references.
-    // Chosen to dodge four separate pitfalls found through testing:
-    //  1. Interjections like "ah"/"aw" can collapse into the r-controlled
-    //     vowels ("ah" == "are") in non-rhotic British-style speech.
-    //  2. Words ending in a nasal+stop cluster ("ant", "ink") are commonly
-    //     neutralized/misheard as "and"/"ing".
-    //  3. Grammatical *function* words ("am", "up") are frequently spoken
-    //     in their reduced/weak form (schwa) by TTS engines, swallowing
-    //     the exact vowel we're trying to teach.
-    //  4. The single most iconic classroom demo words ("cat", "pig",
-    //     "cup") are exactly what a teacher is most likely to type as
-    //     the *lesson word itself* - if the demo word is also the target
-    //     word, the isolated sound and the whole word become literally
-    //     identical audio. We use less-canonical (but equally regular
-    //     and correct) words to avoid this coincidence, on top of the
-    //     pitch shift in speakIsolatedSound() that keeps isolated sounds
-    //     acoustically distinct from whole-word speech either way.
-    // Simple concrete nouns with a single, crisp final consonant avoid
-    // pitfalls 1-3: they're always spoken in full/stressed form.
-    a: { text: "bag", rate: 0.85 },
-    e: { text: "egg", rate: 0.85 },
-    i: { text: "lid", rate: 0.85 },
-    o: { text: "ox", rate: 0.85 },
-    u: { text: "mud", rate: 0.85 },
+    // Vowels - real words/interjections every voice reads consistently.
+    a: { text: "ah", rate: 0.85 },
+    e: { text: "eh", rate: 0.85 },
+    i: { text: "ih", rate: 0.85 },
+    o: { text: "aw", rate: 0.85 },
+    u: { text: "uh", rate: 0.85 },
     "ā": { text: "ay", rate: 0.85 },
     "ē": { text: "ee", rate: 0.85 },
     "ī": { text: "eye", rate: 0.85 },
