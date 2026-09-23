@@ -64,7 +64,9 @@ followed by `e`/`i`/`y` within the word.)
   - **Continuant sounds** you can hold on their own (`f`, `l`, `m`, `n`,
     `r`, `s`, `v`, `z`, `sh`, `th`, `ng`, `h`) are spoken as a held sound
     (e.g. "sss", "mmm") at a slower rate — this is genuinely how those
-    sounds work, with no added vowel needed.
+    sounds work, with no added vowel needed. (`n` is the one exception:
+    "nnn" was often misread by TTS engines as spelled-out letter names,
+    so it uses a brief, slow "nuh" release instead.)
   - **Stop sounds** (`b`, `d`, `g`, `k`, `p`, `t`, `ch`, `j`) can't be
     heard at all without a release into a vowel — that's basic
     articulatory phonetics, not a workaround — so the app uses the
@@ -72,8 +74,10 @@ followed by `e`/`i`/`y` within the word.)
     matching how reading-science programs teach these sounds (a quick
     "kuh", never a drawn-out one).
   - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken as short
-    interjections — *ah, eh, ih, aw, uh* — read consistently by every
-    voice without being mistaken for a spelled-out letter name.
+    interjections — *ah, ehh, ihh, aw, uh* — read consistently by every
+    voice without being mistaken for a spelled-out letter name. (`i`
+    uses "ihh" rather than "ih", which some engines auto-corrected to
+    the pronoun "I" - sounding like the long-i vowel instead.)
 
     Simple concrete nouns with one crisp final consonant avoid pitfalls
     1-3, since they're always spoken in full, stressed form.

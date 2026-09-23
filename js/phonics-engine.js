@@ -445,7 +445,10 @@
     f: { text: "fff", rate: 0.7 },
     l: { text: "lll", rate: 0.7 },
     m: { text: "mmm", rate: 0.7 },
-    n: { text: "nnn", rate: 0.7 },
+    // "n" as "nnn" was often misread as spelled-out letter names ("en
+    // en en") since it's a much rarer text pattern than "mmm"/"sss" -
+    // a brief, slow release avoids that misreading.
+    n: { text: "nuh", rate: 0.75 },
     r: { text: "rrr", rate: 0.7 },
     s: { text: "sss", rate: 0.7 },
     v: { text: "vvv", rate: 0.7 },
@@ -458,7 +461,9 @@
     // Vowels - real words/interjections every voice reads consistently.
     a: { text: "ah", rate: 0.85 },
     e: { text: "eh", rate: 0.85 },
-    i: { text: "ih", rate: 0.85 },
+    // "ih" was sometimes auto-corrected/misread as the pronoun "I",
+    // pronounced like the long-i sound, colliding with "ī" below.
+    i: { text: "ihh", rate: 0.85 },
     o: { text: "aw", rate: 0.85 },
     u: { text: "uh", rate: 0.85 },
     "ā": { text: "ay", rate: 0.85 },
