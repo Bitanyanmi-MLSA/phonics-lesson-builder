@@ -81,6 +81,49 @@
     localStorage.removeItem(SOUND_KEY);
   }
 
+  // --- Custom sound recordings (real voice) -------------------------
+  // Stores a base64 data: URL per sound label, recorded via the mic
+  // (see recorder.js). When present, this takes priority over any
+  // text-to-speech respelling/override for that sound.
+  const RECORDING_KEY = "phonicsLessonBuilder.soundRecordings.v1";
+
+  function loadSoundRecordings() {
+    try {
+      const raw = localStorage.getItem(RECORDING_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function getSoundRecording(label) {
+    const all = loadSoundRecordings();
+    return all[label] || null;
+  }
+
+  function setSoundRecording(label, dataUrl) {
+    const all = loadSoundRecordings();
+    all[label] = dataUrl;
+    try {
+      localStorage.setItem(RECORDING_KEY, JSON.stringify(all));
+      return true;
+    } catch (e) {
+      // Likely a quota error (localStorage is usually ~5-10MB) - the
+      // recording was too long/large to store.
+      return false;
+    }
+  }
+
+  function resetSoundRecording(label) {
+    const all = loadSoundRecordings();
+    delete all[label];
+    localStorage.setItem(RECORDING_KEY, JSON.stringify(all));
+  }
+
+  function resetAllSoundRecordings() {
+    localStorage.removeItem(RECORDING_KEY);
+  }
+
   global.Storage2 = {
     getWords,
     addWord,
@@ -88,6 +131,10 @@
     getSoundOverride,
     setSoundOverride,
     resetSoundOverride,
-    resetAllSoundOverrides
+    resetAllSoundOverrides,
+    getSoundRecording,
+    setSoundRecording,
+    resetSoundRecording,
+    resetAllSoundRecordings
   };
 })(typeof window !== "undefined" ? window : globalThis);

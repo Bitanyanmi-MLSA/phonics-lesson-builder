@@ -73,13 +73,20 @@
     if (voice) utter.voice = voice;
   }
 
-  function speak(text, rate = 0.9, pitch = 1.05) {
-    if (!synth) return;
+  function speak(text, rate = 0.9, pitch = 1.05, onDone) {
+    if (!synth) {
+      if (onDone) onDone();
+      return;
+    }
     synth.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.rate = rate;
     utter.pitch = pitch;
     applyVoice(utter);
+    if (onDone) {
+      utter.onend = onDone;
+      utter.onerror = onDone;
+    }
     synth.speak(utter);
   }
 
@@ -91,8 +98,8 @@
    * short /a/ sound uses "bag"), which could otherwise coincide with the
    * word actually being taught.
    */
-  function speakIsolatedSound(text, rate = 0.85) {
-    speak(text, rate, 1.45);
+  function speakIsolatedSound(text, rate = 0.85, onDone) {
+    speak(text, rate, 1.45, onDone);
   }
 
   /**

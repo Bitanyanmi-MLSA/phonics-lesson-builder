@@ -43,6 +43,38 @@
     return override || PhonicsEngine.soundToSpeech(label);
   }
 
+  /**
+   * Play a phonics sound by its label (e.g. "k", "ā", "n"). If the
+   * teacher has recorded their own voice for this sound, play that
+   * back exactly as recorded - otherwise fall back to text-to-speech.
+   * Calls `onDone()` when playback finishes, so sequences (segmenting,
+   * blending) can chain sounds one after another.
+   */
+  function playSoundLabel(label, onDone) {
+    const recording = Storage2.getSoundRecording(label);
+    if (recording) {
+      const audio = new Audio(recording);
+      if (onDone) {
+        audio.addEventListener("ended", onDone, { once: true });
+        audio.addEventListener("error", onDone, { once: true });
+      }
+      audio.play();
+      return;
+    }
+    const info = getSoundSpeech(label);
+    Speech.speakIsolatedSound(info.text, info.rate, onDone);
+  }
+
+  /** Play a list of sound labels one after another (mixing recordings
+   * and text-to-speech seamlessly), with a short pause between each. */
+  function playSoundSequence(labels, index) {
+    index = index || 0;
+    if (index >= labels.length) return;
+    playSoundLabel(labels[index], () => {
+      setTimeout(() => playSoundSequence(labels, index + 1), 150);
+    });
+  }
+
   function init() {
     Levels.forEach((lvl) => {
       const opt = document.createElement("option");
@@ -88,7 +120,14 @@
 
     if (resetAllSoundsBtn) {
       resetAllSoundsBtn.addEventListener("click", () => {
+        if (
+          !confirm(
+            "This will reset all custom text-to-speech tweaks AND delete all your recorded voice clips. Continue?"
+          )
+        )
+          return;
         Storage2.resetAllSoundOverrides();
+        Storage2.resetAllSoundRecordings();
         initSoundLab();
       });
     }
@@ -153,7 +192,97 @@
     row.appendChild(testBtn);
     row.appendChild(saveBtn);
     row.appendChild(resetBtn);
+    row.appendChild(recordingControls(label, { textInput, rateInput }));
     return row;
+  }
+
+  /** Builds the "record your own voice" controls for one sound-lab row:
+   * a status badge, Record/Stop toggle button, Play button (to preview
+   * the saved recording), and a Remove button. When a recording exists
+   * it takes priority over the TTS text/rate controls next to it. */
+  function recordingControls(label, ttsControls) {
+    const wrap = document.createElement("span");
+    wrap.className = "sound-lab-recording";
+
+    const status = document.createElement("span");
+    status.className = "sound-lab-rec-status";
+
+    const recordBtn = document.createElement("button");
+    recordBtn.className = "secondary-btn sound-lab-rec-btn";
+
+    const playBtn = document.createElement("button");
+    playBtn.className = "play-btn";
+    playBtn.textContent = "▶ My voice";
+
+    const removeBtn = document.createElement("button");
+    removeBtn.className = "secondary-btn";
+    removeBtn.textContent = "Remove voice";
+
+    let activeHandle = null;
+
+    function refresh() {
+      const hasRecording = !!Storage2.getSoundRecording(label);
+      status.textContent = hasRecording ? "🎙️ Using your voice" : "Using text-to-speech";
+      status.classList.toggle("sound-lab-rec-active", hasRecording);
+      playBtn.style.display = hasRecording ? "" : "none";
+      removeBtn.style.display = hasRecording ? "" : "none";
+      if (ttsControls) {
+        ttsControls.textInput.disabled = hasRecording;
+        ttsControls.rateInput.disabled = hasRecording;
+      }
+    }
+
+    recordBtn.textContent = "🔴 Record";
+    recordBtn.addEventListener("click", () => {
+      if (activeHandle) {
+        // Currently recording -> stop it.
+        activeHandle.stop();
+        activeHandle = null;
+        recordBtn.textContent = "🔴 Record";
+        return;
+      }
+      if (!Recorder.isSupported()) {
+        alert(
+          "Recording isn't available here. It needs a microphone and a secure page (works on the live GitHub Pages site)."
+        );
+        return;
+      }
+      recordBtn.textContent = "⏹ Stop";
+      status.textContent = "Recording… speak the sound now";
+      activeHandle = Recorder.record(
+        (dataUrl) => {
+          activeHandle = null;
+          recordBtn.textContent = "🔴 Record";
+          if (!Storage2.setSoundRecording(label, dataUrl)) {
+            alert("Could not save the recording (it may be too long). Try a shorter recording.");
+          }
+          refresh();
+        },
+        (err) => {
+          activeHandle = null;
+          recordBtn.textContent = "🔴 Record";
+          alert("Recording failed: " + err.message);
+          refresh();
+        }
+      );
+    });
+
+    playBtn.addEventListener("click", () => {
+      const dataUrl = Storage2.getSoundRecording(label);
+      if (dataUrl) new Audio(dataUrl).play();
+    });
+
+    removeBtn.addEventListener("click", () => {
+      Storage2.resetSoundRecording(label);
+      refresh();
+    });
+
+    wrap.appendChild(status);
+    wrap.appendChild(recordBtn);
+    wrap.appendChild(playBtn);
+    wrap.appendChild(removeBtn);
+    refresh();
+    return wrap;
   }
 
   function initVoicePicker() {
@@ -252,10 +381,10 @@
     return el;
   }
 
-  /** Play a phonics "sound label" (e.g. "k", "ā") using its tuned rate. */
+  /** Play a phonics "sound label" (e.g. "k", "ā") - recorded voice if
+   * the teacher saved one, otherwise text-to-speech. */
   function speakSound(soundLabel) {
-    const info = getSoundSpeech(soundLabel);
-    Speech.speakIsolatedSound(info.text, info.rate);
+    playSoundLabel(soundLabel);
   }
 
   function soundBubble(phoneme) {
@@ -374,11 +503,7 @@
     c.appendChild(row);
     c.appendChild(
       playButton("Segment it (stretch each sound)", () =>
-        Speech.speakSounds(
-          phonemes.filter((p) => !p.silent).map((p) => getSoundSpeech(p.sound)),
-          null,
-          1.45
-        )
+        playSoundSequence(phonemes.filter((p) => !p.silent).map((p) => p.sound))
       )
     );
     return c;
@@ -395,11 +520,7 @@
     btnRow.className = "btn-row";
     btnRow.appendChild(
       playButton("Play sounds separately", () =>
-        Speech.speakSounds(
-          phonemes.map((p) => getSoundSpeech(p.sound)),
-          null,
-          1.45
-        )
+        playSoundSequence(phonemes.map((p) => p.sound))
       )
     );
     btnRow.appendChild(

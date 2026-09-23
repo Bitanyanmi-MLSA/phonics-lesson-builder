@@ -10,7 +10,8 @@ children ages 3–8. Type any word and the app automatically generates:
 - **Rhyming** – onset/rime breakdown for rhyme practice
 - **Sound Manipulation** – delete/add/swap sounds to build new words
 - **Customize Sounds** – fine-tune exactly how any sound is spoken and
-  test it instantly, right on your own device/voice
+  test it instantly, right on your own device/voice, or record your own
+  voice for any sound so the app plays your real voice back
 
 ## How to use
 
@@ -36,7 +37,17 @@ children ages 3–8. Type any word and the app automatically generates:
    edit the respelling and/or speed for that sound, click **🔊 Test**
    until it sounds right, then **Save** — it's remembered on this
    computer from then on. **Reset** puts one sound back to the default;
-   **Reset All to Defaults** clears every custom sound.
+   **Reset All to Defaults** clears every custom sound and recording.
+7. Prefer your own voice over the computer voice? In **🔧 Customize
+   Sounds**, click **🔴 Record** next to any sound, say the sound
+   clearly, then **⏹ Stop**. The app immediately switches to using your
+   recording for that sound everywhere in the app (bubbles, boxes,
+   segmenting, blending). Use **▶ My voice** to preview it, or
+   **Remove voice** to go back to text-to-speech. Recording your voice
+   requires a microphone and only works on a secure page — it works on
+   the live GitHub Pages site (https), but may be blocked if you open
+   `index.html` directly as a local file. Text-to-speech playback
+   always works either way.
 
 ## Notes on accuracy
 

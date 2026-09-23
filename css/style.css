@@ -411,3 +411,28 @@ body {
   border: 1px solid #ccc;
 }
 
+.sound-lab-recording {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex-wrap: wrap;
+  padding-left: 8px;
+  border-left: 2px solid #eee;
+}
+
+.sound-lab-rec-status {
+  font-size: 0.85rem;
+  color: #666;
+  min-width: 130px;
+}
+
+.sound-lab-rec-status.sound-lab-rec-active {
+  color: #2a7a2a;
+  font-weight: bold;
+}
+
+.sound-lab-rec-btn {
+  background: #ffe3e3;
+  border-color: #e88;
+}
+
