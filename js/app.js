@@ -303,7 +303,7 @@
         const hasGhana = voices.some((v) => v.lang.toLowerCase().startsWith("en-gh"));
         voiceHint.textContent = hasGhana
           ? "A Ghanaian English voice was found and selected automatically."
-          : "No Ghanaian voice pack was found on this device, so a British English voice (closest to Ghanaian classroom pronunciation) is selected automatically. Pick a different one below if you prefer.";
+          : "";
       }
     });
     voiceSelect.addEventListener("change", () => {
