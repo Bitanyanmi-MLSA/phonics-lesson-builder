@@ -356,3 +356,58 @@ body {
   color: #888;
   font-size: 0.9rem;
 }
+
+.sound-lab {
+  background: var(--card-bg);
+  border-radius: var(--radius);
+  padding: 16px 20px;
+  margin: 16px auto;
+  max-width: 900px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+.sound-lab summary {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 1.05rem;
+}
+
+.sound-lab-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.sound-lab-group-title {
+  margin: 12px 0 4px;
+  color: var(--primary);
+}
+
+.sound-lab-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.sound-lab-label {
+  font-weight: bold;
+  min-width: 40px;
+}
+
+.sound-lab-text {
+  flex: 1;
+  min-width: 100px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+
+.sound-lab-rate {
+  width: 70px;
+  padding: 6px 8px;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+}
+

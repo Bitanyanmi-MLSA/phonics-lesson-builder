@@ -9,6 +9,8 @@ children ages 3–8. Type any word and the app automatically generates:
 - **Sound Blending** – hear individual sounds, then the whole word
 - **Rhyming** – onset/rime breakdown for rhyme practice
 - **Sound Manipulation** – delete/add/swap sounds to build new words
+- **Customize Sounds** – fine-tune exactly how any sound is spoken and
+  test it instantly, right on your own device/voice
 
 ## How to use
 
@@ -29,6 +31,12 @@ children ages 3–8. Type any word and the app automatically generates:
 5. Click **💾 Save to Word List** to keep a running list of words for that
    level (saved in the browser, so it's ready next time you open the app on
    this computer).
+6. If a sound doesn't sound right on your device or voice (text-to-speech
+   varies by browser/OS), open **🔧 Customize Sounds** at the bottom,
+   edit the respelling and/or speed for that sound, click **🔊 Test**
+   until it sounds right, then **Save** — it's remembered on this
+   computer from then on. **Reset** puts one sound back to the default;
+   **Reset All to Defaults** clears every custom sound.
 
 ## Notes on accuracy
 

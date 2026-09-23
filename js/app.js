@@ -10,8 +10,38 @@
   const savedWordsList = document.getElementById("savedWordsList");
   const voiceSelect = document.getElementById("voiceSelect");
   const voiceHint = document.getElementById("voiceHint");
+  const soundLab = document.getElementById("soundLab");
+  const resetAllSoundsBtn = document.getElementById("resetAllSoundsBtn");
 
   let currentWord = "";
+
+  // Every sound the app can play, with a friendly label for the
+  // "Customize Sounds" panel. Grouped so teachers can find one quickly.
+  const SOUND_LAB_GROUPS = [
+    {
+      title: "Stop sounds",
+      labels: ["b", "d", "g", "k", "p", "t", "ch", "j", "kw", "ks", "w", "y"]
+    },
+    {
+      title: "Continuant sounds",
+      labels: ["f", "l", "m", "n", "r", "s", "v", "z", "sh", "th", "ng", "h"]
+    },
+    {
+      title: "Short vowels",
+      labels: ["a", "e", "i", "o", "u"]
+    },
+    {
+      title: "Long vowels & other vowel sounds",
+      labels: ["ā", "ē", "ī", "ō", "ū", "oo", "ow", "oy", "aw", "ar", "er", "or"]
+    }
+  ];
+
+  /** Get the { text, rate } to speak for a sound label, preferring any
+   * teacher-saved override over the built-in default. */
+  function getSoundSpeech(label) {
+    const override = Storage2.getSoundOverride(label);
+    return override || PhonicsEngine.soundToSpeech(label);
+  }
 
   function init() {
     Levels.forEach((lvl) => {
@@ -24,6 +54,7 @@
     updateLevelDescription();
     renderSavedWords();
     initVoicePicker();
+    initSoundLab();
 
     levelSelect.addEventListener("change", () => {
       updateLevelDescription();
@@ -39,6 +70,90 @@
     wordInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") analyze();
     });
+  }
+
+  function initSoundLab() {
+    if (!soundLab) return;
+    soundLab.innerHTML = "";
+    SOUND_LAB_GROUPS.forEach((group) => {
+      const heading = document.createElement("h4");
+      heading.className = "sound-lab-group-title";
+      heading.textContent = group.title;
+      soundLab.appendChild(heading);
+
+      group.labels.forEach((label) => {
+        soundLab.appendChild(soundLabRow(label));
+      });
+    });
+
+    if (resetAllSoundsBtn) {
+      resetAllSoundsBtn.addEventListener("click", () => {
+        Storage2.resetAllSoundOverrides();
+        initSoundLab();
+      });
+    }
+  }
+
+  function soundLabRow(label) {
+    const row = document.createElement("div");
+    row.className = "sound-lab-row";
+
+    const tag = document.createElement("span");
+    tag.className = "sound-lab-label";
+    tag.textContent = `/${label}/`;
+    row.appendChild(tag);
+
+    const current = getSoundSpeech(label);
+
+    const textInput = document.createElement("input");
+    textInput.type = "text";
+    textInput.className = "sound-lab-text";
+    textInput.value = current.text;
+
+    const rateInput = document.createElement("input");
+    rateInput.type = "number";
+    rateInput.className = "sound-lab-rate";
+    rateInput.min = "0.5";
+    rateInput.max = "1.5";
+    rateInput.step = "0.05";
+    rateInput.value = current.rate;
+    rateInput.title = "Speed";
+
+    const testBtn = document.createElement("button");
+    testBtn.className = "play-btn";
+    testBtn.textContent = "🔊 Test";
+    testBtn.addEventListener("click", () => {
+      Speech.speakIsolatedSound(textInput.value, Number(rateInput.value) || 0.85);
+    });
+
+    const saveBtn = document.createElement("button");
+    saveBtn.className = "secondary-btn";
+    saveBtn.textContent = "Save";
+    saveBtn.addEventListener("click", () => {
+      Storage2.setSoundOverride(label, {
+        text: textInput.value,
+        rate: Number(rateInput.value) || 0.85
+      });
+      saveBtn.textContent = "Saved ✓";
+      setTimeout(() => (saveBtn.textContent = "Save"), 1200);
+    });
+
+    const resetBtn = document.createElement("button");
+    resetBtn.className = "secondary-btn";
+    resetBtn.textContent = "Reset";
+    resetBtn.addEventListener("click", () => {
+      Storage2.resetSoundOverride(label);
+      const def = PhonicsEngine.soundToSpeech(label);
+      textInput.value = def.text;
+      rateInput.value = def.rate;
+    });
+
+    row.appendChild(textInput);
+    row.appendChild(rateInput);
+    row.appendChild(testBtn);
+    row.appendChild(saveBtn);
+    row.appendChild(resetBtn);
+    return row;
   }
 
   function initVoicePicker() {
@@ -139,7 +254,7 @@
 
   /** Play a phonics "sound label" (e.g. "k", "ā") using its tuned rate. */
   function speakSound(soundLabel) {
-    const info = PhonicsEngine.soundToSpeech(soundLabel);
+    const info = getSoundSpeech(soundLabel);
     Speech.speakIsolatedSound(info.text, info.rate);
   }
 
@@ -260,7 +375,7 @@
     c.appendChild(
       playButton("Segment it (stretch each sound)", () =>
         Speech.speakSounds(
-          phonemes.filter((p) => !p.silent).map((p) => PhonicsEngine.soundToSpeech(p.sound)),
+          phonemes.filter((p) => !p.silent).map((p) => getSoundSpeech(p.sound)),
           null,
           1.45
         )
@@ -281,7 +396,7 @@
     btnRow.appendChild(
       playButton("Play sounds separately", () =>
         Speech.speakSounds(
-          phonemes.map((p) => PhonicsEngine.soundToSpeech(p.sound)),
+          phonemes.map((p) => getSoundSpeech(p.sound)),
           null,
           1.45
         )

@@ -45,5 +45,49 @@
     return all[levelId];
   }
 
-  global.Storage2 = { getWords, addWord, removeWord };
+  // --- Custom sound respellings ------------------------------------
+  // Lets a teacher override how any phonics sound is spoken (text +
+  // rate) and instantly test it, since only the teacher can actually
+  // hear whether a respelling sounds right on their device/voice.
+  const SOUND_KEY = "phonicsLessonBuilder.soundOverrides.v1";
+
+  function loadSoundOverrides() {
+    try {
+      const raw = localStorage.getItem(SOUND_KEY);
+      return raw ? JSON.parse(raw) : {};
+    } catch (e) {
+      return {};
+    }
+  }
+
+  function getSoundOverride(label) {
+    const all = loadSoundOverrides();
+    return all[label] || null;
+  }
+
+  function setSoundOverride(label, info) {
+    const all = loadSoundOverrides();
+    all[label] = info;
+    localStorage.setItem(SOUND_KEY, JSON.stringify(all));
+  }
+
+  function resetSoundOverride(label) {
+    const all = loadSoundOverrides();
+    delete all[label];
+    localStorage.setItem(SOUND_KEY, JSON.stringify(all));
+  }
+
+  function resetAllSoundOverrides() {
+    localStorage.removeItem(SOUND_KEY);
+  }
+
+  global.Storage2 = {
+    getWords,
+    addWord,
+    removeWord,
+    getSoundOverride,
+    setSoundOverride,
+    resetSoundOverride,
+    resetAllSoundOverrides
+  };
 })(typeof window !== "undefined" ? window : globalThis);
