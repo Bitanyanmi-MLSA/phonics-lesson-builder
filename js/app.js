@@ -140,7 +140,7 @@
   /** Play a phonics "sound label" (e.g. "k", "ā") using its tuned rate. */
   function speakSound(soundLabel) {
     const info = PhonicsEngine.soundToSpeech(soundLabel);
-    Speech.speak(info.text, info.rate);
+    Speech.speakIsolatedSound(info.text, info.rate);
   }
 
   function soundBubble(phoneme) {
@@ -260,7 +260,9 @@
     c.appendChild(
       playButton("Segment it (stretch each sound)", () =>
         Speech.speakSounds(
-          phonemes.filter((p) => !p.silent).map((p) => PhonicsEngine.soundToSpeech(p.sound))
+          phonemes.filter((p) => !p.silent).map((p) => PhonicsEngine.soundToSpeech(p.sound)),
+          null,
+          1.45
         )
       )
     );
@@ -278,7 +280,11 @@
     btnRow.className = "btn-row";
     btnRow.appendChild(
       playButton("Play sounds separately", () =>
-        Speech.speakSounds(phonemes.map((p) => p.text))
+        Speech.speakSounds(
+          phonemes.map((p) => PhonicsEngine.soundToSpeech(p.sound)),
+          null,
+          1.45
+        )
       )
     );
     btnRow.appendChild(

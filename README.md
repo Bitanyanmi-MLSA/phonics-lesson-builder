@@ -44,7 +44,10 @@ Every sound bubble/box shows the **written letter(s)** on top and the
 *cut*, "c" → `/s/` in *city*, "g" → `/j/` in *gem*). Context rules handle
 the common cases: soft/hard `c` and `g`, `x` as `/ks/` or `/z/`, silent
 letters (`kn`, `wr`, `gn`, `mb`, silent final "e"), and long vs. short
-vowels.
+vowels. (Fixed: word-final `c`/`g` — as in *dog*, *pig*, *bag*, *music*,
+*attic* — used to be wrongly detected as "soft" due to a blank-string
+edge case; they now correctly stay hard `/g/`/`/k/` unless truly
+followed by `e`/`i`/`y` within the word.)
 
 ## Voice and pronunciation
 
@@ -69,8 +72,8 @@ vowels.
     matching how reading-science programs teach these sounds (a quick
     "kuh", never a drawn-out one).
   - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using simple
-    CVC content-word references — *cat, egg, pig, ox, cup* — chosen to
-    dodge three separate text-to-speech pitfalls found through testing:
+    CVC content-word references — *bag, egg, lid, ox, mud* — chosen to
+    dodge four separate pitfalls found through testing:
     1. Interjections like "ah"/"aw" can collapse into the r-controlled
        vowels (e.g. "ah" == "are") in British-style, non-rhotic speech.
     2. Words ending in a nasal+stop cluster ("ant", "ink") are commonly
@@ -78,9 +81,21 @@ vowels.
     3. Grammatical *function* words ("am", "up" on their own) are often
        spoken by TTS engines in a reduced/weak (schwa) form, swallowing
        the very vowel sound being taught.
+    4. The most iconic classroom demo words ("cat", "pig", "cup") are
+       exactly what a teacher is likely to type as the *lesson word
+       itself* - when the demo word matches the target word, the
+       isolated sound and the whole word become literally identical
+       audio. Less-canonical (but equally regular) words avoid this.
 
-    Simple concrete nouns with one crisp final consonant avoid all
-    three, since they're always spoken in full, stressed form.
+    Simple concrete nouns with one crisp final consonant avoid pitfalls
+    1-3, since they're always spoken in full, stressed form.
+  - **Isolated sounds vs. whole words are pitched differently**: every
+    single-sound click (isolation, segmentation, blending) is spoken at
+    a noticeably higher pitch than "Say the word" playback, so a sound
+    demo never sounds like it's just saying the whole word out loud -
+    important because vowel sounds are respelled using real short
+    words, which could otherwise coincide with the actual word being
+    taught.
 
 ## Folder structure
 

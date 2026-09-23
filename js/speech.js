@@ -73,22 +73,36 @@
     if (voice) utter.voice = voice;
   }
 
-  function speak(text, rate = 0.9) {
+  function speak(text, rate = 0.9, pitch = 1.05) {
     if (!synth) return;
     synth.cancel();
     const utter = new SpeechSynthesisUtterance(text);
     utter.rate = rate;
-    utter.pitch = 1.05;
+    utter.pitch = pitch;
     applyVoice(utter);
     synth.speak(utter);
   }
 
   /**
+   * Speak a single isolated phonics sound (as opposed to a whole word).
+   * Uses a clearly higher pitch than `speak()` so an isolated sound never
+   * sounds acoustically identical to "say the whole word" - important
+   * because some sounds are respelled using real short words (e.g. the
+   * short /a/ sound uses "bag"), which could otherwise coincide with the
+   * word actually being taught.
+   */
+  function speakIsolatedSound(text, rate = 0.85) {
+    speak(text, rate, 1.45);
+  }
+
+  /**
    * Speak a list of sounds one at a time, pausing between each.
    * Each item may be a plain string, or a { text, rate } object (as
-   * returned by PhonicsEngine.soundToSpeech).
+   * returned by PhonicsEngine.soundToSpeech). Pass a higher `pitch` when
+   * speaking isolated phonics sounds (vs. real word/syllable chunks) so
+   * they're clearly distinguishable from normal word speech.
    */
-  function speakSounds(items, onDone) {
+  function speakSounds(items, onDone, pitch = 1.05) {
     if (!synth || items.length === 0) {
       if (onDone) onDone();
       return;
@@ -105,6 +119,7 @@
       const rate = typeof item === "string" ? 0.7 : item.rate || 0.7;
       const utter = new SpeechSynthesisUtterance(text);
       utter.rate = rate;
+      utter.pitch = pitch;
       applyVoice(utter);
       utter.onend = () => {
         i += 1;
@@ -117,6 +132,7 @@
 
   global.Speech = {
     speak,
+    speakIsolatedSound,
     speakSounds,
     getVoices,
     onVoicesReady,
