@@ -527,6 +527,22 @@ h4 {
   font-size: 0.9rem;
 }
 
+.share-qr {
+  margin-top: 14px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.share-qr img {
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: white;
+  padding: 8px;
+  box-shadow: var(--shadow-sm);
+}
+
 /* ---------- Customize Sounds panel ---------- */
 
 .sound-lab {

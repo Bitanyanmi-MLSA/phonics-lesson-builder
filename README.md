@@ -13,6 +13,14 @@ children ages 3–8. Type any word and the app automatically generates:
   test it instantly, right on your own device/voice, or record your own
   voice for any sound so the app plays your real voice back
 
+## Try it online
+
+Live site: https://bitanyanmi-mlsa.github.io/phonics-lesson-builder/
+
+Scan this QR code to open it on a phone or tablet:
+
+![QR code linking to the live app](assets/qr-code.png)
+
 ## How to use
 
 1. Double-click `index.html` to open it in any browser (Chrome/Edge
