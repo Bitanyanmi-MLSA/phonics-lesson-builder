@@ -458,13 +458,11 @@
     // Vowels - real, unambiguous words (not interjections that can be
     // colored by r-controlled vowels in non-rhotic British-style speech,
     // e.g. "ah" and "ar"/"are" can sound identical in British English).
-    // We avoid words ending in a nasal+stop cluster (e.g. "ant", "ink")
-    // because "-nt"/"-nk" clusters are commonly pronounced/heard as
-    // "-nd"/"-ng" (a well-known English neutralization) - so each word
-    // below ends on a single, unambiguous consonant instead.
-    a: { text: "am", rate: 0.85 },
+    // These match the classic UK phonics reference words for each short
+    // vowel, so they stay clearly distinct from ar/er/or.
+    a: { text: "ant", rate: 0.85 },
     e: { text: "egg", rate: 0.85 },
-    i: { text: "itch", rate: 0.85 },
+    i: { text: "ink", rate: 0.85 },
     o: { text: "ox", rate: 0.85 },
     u: { text: "up", rate: 0.85 },
     "ā": { text: "ay", rate: 0.85 },
