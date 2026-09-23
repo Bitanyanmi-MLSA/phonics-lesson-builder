@@ -68,13 +68,13 @@ vowels.
     smallest possible release and speaks it *fast* to keep it clipped,
     matching how reading-science programs teach these sounds (a quick
     "kuh", never a drawn-out one).
-  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using the
-    classic UK phonics reference words — *ant, egg, ink, ox, up* —
-    instead of interjections like "ah"/"aw", because in British-style
-    (non-rhotic) pronunciation those interjections can sound identical
-    to the r-controlled vowels `ar`/`or` (e.g. "ah" and "are" collapse
-    to the same sound). The reference words keep every short vowel
-    clearly distinct from `ar`, `er`, and `or`.
+  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using clean
+    single-consonant reference words — *am, egg, itch, ox, up* —
+    instead of interjections like "ah"/"aw" (which can sound identical
+    to the r-controlled vowels `ar`/`or` in British-style speech) and
+    instead of words like "ant"/"ink" (whose "-nt"/"-nk" endings are
+    commonly mis-heard as "-nd"/"-ng"). This keeps every short vowel
+    clean and clearly distinct from `ar`, `er`, `or`, and each other.
 
 ## Folder structure
 
