@@ -455,12 +455,16 @@
     ng: { text: "ing", rate: 0.7 },
     h: { text: "hhh", rate: 0.7 },
 
-    // Vowels - real words/interjections every voice reads consistently.
-    a: { text: "ah", rate: 0.85 },
-    e: { text: "eh", rate: 0.85 },
-    i: { text: "ih", rate: 0.85 },
-    o: { text: "aw", rate: 0.85 },
-    u: { text: "uh", rate: 0.85 },
+    // Vowels - real, unambiguous words (not interjections that can be
+    // colored by r-controlled vowels in non-rhotic British-style speech,
+    // e.g. "ah" and "ar"/"are" can sound identical in British English).
+    // These match the classic UK phonics reference words for each short
+    // vowel, so they stay clearly distinct from ar/er/or.
+    a: { text: "ant", rate: 0.85 },
+    e: { text: "egg", rate: 0.85 },
+    i: { text: "ink", rate: 0.85 },
+    o: { text: "ox", rate: 0.85 },
+    u: { text: "up", rate: 0.85 },
     "ā": { text: "ay", rate: 0.85 },
     "ē": { text: "ee", rate: 0.85 },
     "ī": { text: "eye", rate: 0.85 },
