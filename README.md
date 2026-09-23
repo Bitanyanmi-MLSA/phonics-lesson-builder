@@ -15,13 +15,13 @@ children ages 3–8. Type any word and the app automatically generates:
 1. Double-click `index.html` to open it in any browser (Chrome/Edge
    recommended for best text-to-speech voices). No install, no internet
    required after the page loads.
-2. Pick a **Lesson Level** from the dropdown — each level unlocks the
-   activities appropriate for that age range:
-   - Level 1 (Ages 3–4): Rhyming & First Sounds
-   - Level 2 (Ages 4–5): Syllable Clapping
-   - Level 3 (Ages 5–6): Sound Isolation (First/Middle/Last)
-   - Level 4 (Ages 6–7): Blending & Segmenting
-   - Level 5 (Ages 7–8): Sound Manipulation
+2. Pick a **Lesson Level** from the dropdown — each level unlocks a
+   different set of activities:
+   - Rhyming & First Sounds
+   - Syllable Clapping
+   - Sound Isolation (First/Middle/Last)
+   - Blending & Segmenting
+   - Sound Manipulation
 3. Type a word and press **Analyze** (or Enter). The app builds the whole
    lesson for you — you only ever need to supply the word.
 4. Click any sound bubble, syllable chip, or "🔊 Play" button to hear it
