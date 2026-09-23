@@ -455,16 +455,22 @@
     ng: { text: "ing", rate: 0.7 },
     h: { text: "hhh", rate: 0.7 },
 
-    // Vowels - real, unambiguous words (not interjections that can be
-    // colored by r-controlled vowels in non-rhotic British-style speech,
-    // e.g. "ah" and "ar"/"are" can sound identical in British English).
-    // These match the classic UK phonics reference words for each short
-    // vowel, so they stay clearly distinct from ar/er/or.
-    a: { text: "ant", rate: 0.85 },
+    // Vowels - real, unambiguous, simple CVC content-word references.
+    // Chosen to dodge three separate TTS pitfalls we hit in testing:
+    //  1. Interjections like "ah"/"aw" can collapse into the r-controlled
+    //     vowels ("ah" == "are") in non-rhotic British-style speech.
+    //  2. Words ending in a nasal+stop cluster ("ant", "ink") are commonly
+    //     neutralized/misheard as "and"/"ing".
+    //  3. Grammatical *function* words ("am", "up") are frequently spoken
+    //     in their reduced/weak form (schwa) by TTS engines, swallowing
+    //     the exact vowel we're trying to teach.
+    // Simple concrete nouns with a single, crisp final consonant avoid
+    // all three: they're always spoken in full/stressed form.
+    a: { text: "cat", rate: 0.85 },
     e: { text: "egg", rate: 0.85 },
-    i: { text: "ink", rate: 0.85 },
+    i: { text: "pig", rate: 0.85 },
     o: { text: "ox", rate: 0.85 },
-    u: { text: "up", rate: 0.85 },
+    u: { text: "cup", rate: 0.85 },
     "ā": { text: "ay", rate: 0.85 },
     "ē": { text: "ee", rate: 0.85 },
     "ī": { text: "eye", rate: 0.85 },

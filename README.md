@@ -68,13 +68,19 @@ vowels.
     smallest possible release and speaks it *fast* to keep it clipped,
     matching how reading-science programs teach these sounds (a quick
     "kuh", never a drawn-out one).
-  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using the
-    classic UK phonics reference words — *ant, egg, ink, ox, up* —
-    instead of interjections like "ah"/"aw", because in British-style
-    (non-rhotic) pronunciation those interjections can sound identical
-    to the r-controlled vowels `ar`/`or` (e.g. "ah" and "are" collapse
-    to the same sound). The reference words keep every short vowel
-    clearly distinct from `ar`, `er`, and `or`.
+  - **Short vowels** (`a`, `e`, `i`, `o`, `u`) are spoken using simple
+    CVC content-word references — *cat, egg, pig, ox, cup* — chosen to
+    dodge three separate text-to-speech pitfalls found through testing:
+    1. Interjections like "ah"/"aw" can collapse into the r-controlled
+       vowels (e.g. "ah" == "are") in British-style, non-rhotic speech.
+    2. Words ending in a nasal+stop cluster ("ant", "ink") are commonly
+       neutralized/misheard as "and"/"ing".
+    3. Grammatical *function* words ("am", "up" on their own) are often
+       spoken by TTS engines in a reduced/weak (schwa) form, swallowing
+       the very vowel sound being taught.
+
+    Simple concrete nouns with one crisp final consonant avoid all
+    three, since they're always spoken in full, stressed form.
 
 ## Folder structure
 
