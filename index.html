@@ -4,23 +4,37 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Phonics Lesson Builder</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Nunito:wght@400;600;700;800&display=swap"
+    rel="stylesheet"
+  />
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
   <header class="app-header">
-    <h1>🔤 Phonics Lesson Builder</h1>
-    <p class="subtitle">Phonemic Awareness for Ages 3–8</p>
+    <div class="app-header-inner">
+      <h1>🔤 Phonics Lesson Builder</h1>
+      <p class="subtitle">Phonemic Awareness for Ages 3–8</p>
+    </div>
   </header>
 
   <main class="app-main">
     <section class="controls">
-      <label for="levelSelect">Lesson Level</label>
-      <select id="levelSelect"></select>
-      <p id="levelDescription" class="level-desc"></p>
+      <div class="controls-grid">
+        <div class="field">
+          <label for="levelSelect">Lesson Level</label>
+          <select id="levelSelect"></select>
+          <p id="levelDescription" class="level-desc"></p>
+        </div>
 
-      <label for="voiceSelect">Reading Voice</label>
-      <select id="voiceSelect"></select>
-      <p id="voiceHint" class="level-desc"></p>
+        <div class="field">
+          <label for="voiceSelect">Reading Voice</label>
+          <select id="voiceSelect"></select>
+          <p id="voiceHint" class="level-desc"></p>
+        </div>
+      </div>
 
       <div class="word-form">
         <label for="wordInput">Word</label>
@@ -31,7 +45,7 @@
           autocomplete="off"
         />
         <div class="btn-row">
-          <button id="analyzeBtn" class="primary-btn">Analyze</button>
+          <button id="analyzeBtn" class="primary-btn">🔍 Analyze</button>
           <button id="saveWordBtn" class="secondary-btn">💾 Save to Word List</button>
         </div>
       </div>
@@ -58,11 +72,11 @@
         (https) GitHub Pages site, not when opening the file directly.
       </p>
       <div id="soundLab" class="sound-lab-grid"></div>
-      <button id="resetAllSoundsBtn" class="secondary-btn">Reset All to Defaults</button>
+      <button id="resetAllSoundsBtn" class="secondary-btn">↺ Reset All to Defaults</button>
     </details>
 
     <aside class="saved-words">
-      <h3>Saved Words (this level)</h3>
+      <h3>⭐ Saved Words (this level)</h3>
       <ul id="savedWordsList" class="word-list"></ul>
     </aside>
   </main>
@@ -70,6 +84,7 @@
   <footer class="app-footer">
     <p>Works fully offline. Click any sound bubble to hear it spoken aloud.</p>
   </footer>
+
 
   <script src="js/phonics-engine.js"></script>
   <script src="js/speech.js"></script>
